@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3.8.1'
+    }
+
+    environment {
+        SONARQUBE = 'SonarQube'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,10 +16,20 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    // SonarQube Analysis
+                    withSonarQubeEnv(SONARQUBE) {
+                        'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
-                    // Use bat to run Maven on Windows
                     'mvn clean install'
                 }
             }
@@ -20,7 +38,6 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Use bat to run Maven test command
                     'mvn test'
                 }
             }
