@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Use bat to run Maven on Windows
-                    mvn clean install
+                    'mvn clean install'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Use bat to run Maven test command
-                    mvn test
+                    'mvn test'
                 }
             }
         }
