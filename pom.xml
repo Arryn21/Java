@@ -12,10 +12,8 @@
     <description>Simple Java Math Utility Library</description>
 
     <properties>
-        <!-- <maven.compiler.source>17</maven.compiler.source>   Use Java 17 or your installed version -->
-        <!-- <maven.compiler.target>17</maven.compiler.target> -->
-        <maven.compiler.source>1.8</maven.compiler.source>  <!-- Use Java 17 or your installed version -->
-        <maven.compiler.target>1.8</maven.compiler.target>     
+        <maven.compiler.source>23</maven.compiler.source>  <!-- Use Java 17 or your installed version -->
+        <maven.compiler.target>23</maven.compiler.target>     
     </properties>
 
 
