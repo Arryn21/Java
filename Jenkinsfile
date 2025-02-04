@@ -42,7 +42,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    'mvn sonar:sonar'
+                    'mvn sonar:sonar' -X
                     'mvn clean install'
                 }
             }
