@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         SONARQUBE = 'SonarQube'  // Ensure this matches the configured SonarQube server name in Jenkins
+        SONAR_TOKEN = credentials('sonarqube-token')  // Assuming you have stored your token in Jenkins Credentials with the ID 'sonarqube-token'
     }
 
     stages {
@@ -16,7 +17,13 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv(SONARQUBE) {
-                        'mvn clean verify sonar:sonar -Dsonar.projectKey=JenkinsIntegration -Dsonar.projectName=JenkinsIntegration -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java'
+                        sh '''mvn clean verify sonar:sonar \
+                            -Dsonar.projectKey=JenkinsIntegration \
+                            -Dsonar.projectName=JenkinsIntegration \
+                            -Dsonar.projectVersion=1.0 \
+                            -Dsonar.sources=src/main/java \
+                            -Dsonar.tests=src/test/java \
+                            -Dsonar.login=${SONAR_TOKEN}'''  // Pass the token here
                     }
                 }
             }
@@ -35,7 +42,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    'mvn clean install'
+                    sh 'mvn clean install'
                 }
             }
         }
@@ -43,7 +50,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    'mvn test'
+                    sh 'mvn test'
                 }
             }
         }
