@@ -13,19 +13,6 @@ pipeline {
             }
         }
 
-        stage('Check Java Version') {
-            steps {
-                bat 'java -version'
-            }
-        }
-
-        stage('Check Maven Version') {
-            steps {
-                bat 'mvn -v'
-            }
-        }
-
-
         stage('Build') {
             steps {
                 bat 'mvn clean package'
