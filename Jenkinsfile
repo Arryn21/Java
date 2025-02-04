@@ -15,13 +15,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                'mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
         stage('Unit Test') {
             steps {
-                'mvn test'
+                bat 'mvn test'
             }
             post {
                 always {
@@ -32,7 +32,7 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
-                """
+              bat """
             mvn sonar:sonar \
                 -Dsonar.projectKey=JenkinsIntegration \
                 -Dsonar.projectName=JenkinsIntegration \
@@ -47,7 +47,7 @@ pipeline {
 
         stage('Code Coverage') {
             steps {
-                'mvn clean verify'
+              bat 'mvn clean verify'
             }
             post {
                 always {
