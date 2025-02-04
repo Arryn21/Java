@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     withSonarQubeEnv(SONARQUBE) {
-                        sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=JenkinsIntegration -Dsonar.projectName=JenkinsIntegration -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java'
+                        'mvn clean verify sonar:sonar -Dsonar.projectKey=JenkinsIntegration -Dsonar.projectName=JenkinsIntegration -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java'
                     }
                 }
             }
@@ -35,7 +35,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'mvn clean install'
+                    'mvn clean install'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'mvn test'
+                    'mvn test'
                 }
             }
         }
