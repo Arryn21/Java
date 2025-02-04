@@ -11,7 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'mvn clean install'
+                    // Use bat to run Maven on Windows
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -19,7 +20,8 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh 'mvn test'
+                    // Use bat to run Maven test command
+                    bat 'mvn test'
                 }
             }
         }
