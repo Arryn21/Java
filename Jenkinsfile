@@ -15,13 +15,13 @@ pipeline {
 
         stage('Check Java Version') {
             steps {
-                sh 'java -version'
+                bat 'java -version'
             }
         }
 
         stage('Check Maven Version') {
             steps {
-                sh 'mvn -v'
+                bat 'mvn -v'
             }
         }
 
