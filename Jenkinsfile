@@ -5,13 +5,26 @@ pipeline {
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_LOGIN = 'sqp_ff90d30792667ff1b6b4ffa05e481bbffb2db0dd'
     }
-
+    
     stages {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Arryn21/Java.git', branch: 'main'
             }
         }
+
+        stage('Check Java Version') {
+            steps {
+                sh 'java -version'
+            }
+        }
+
+        stage('Check Maven Version') {
+            steps {
+                sh 'mvn -v'
+            }
+        }
+
 
         stage('Build') {
             steps {
