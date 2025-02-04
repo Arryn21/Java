@@ -1,9 +1,8 @@
 pipeline {
     agent any
 
-
     environment {
-        SONARQUBE = 'SonarQube'
+        SONARQUBE = 'SonarQube'  // Ensure this matches the configured SonarQube server name in Jenkins
     }
 
     stages {
@@ -16,9 +15,18 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    // SonarQube Analysis
                     withSonarQubeEnv(SONARQUBE) {
-                        'mvn sonar:sonar'
+                        sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=JenkinsIntegration -Dsonar.projectName=JenkinsIntegration -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java'
+                    }
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                script {
+                    timeout(time: 5, unit: 'MINUTES') {
+                        waitForQualityGate abortPipeline: true
                     }
                 }
             }
@@ -27,7 +35,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    'mvn clean install'
+                    sh 'mvn clean install'
                 }
             }
         }
@@ -35,7 +43,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    'mvn test'
+                    sh 'mvn test'
                 }
             }
         }
