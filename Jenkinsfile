@@ -32,7 +32,7 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
-                bat 'mvn sonar:sonar -Dsonar.projectKey=JenkinsIntegration -Dsonar.projectName=JenkinsIntegration -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_LOGIN'
+                bat 'mvn sonar:sonar -Dsonar.projectKey=JenkinsIntegration -Dsonar.projectName=JenkinsIntegration -Dsonar.projectVersion=1.0 -Dsonar.sources=src/main/java -Dsonar.tests=src/test/java -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_LOGIN'
             }
         }
 
