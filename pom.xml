@@ -12,12 +12,9 @@
     <description>Simple Java Math Utility Library</description>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>  <!-- Use Java 17 or your installed version -->
+        <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
-
-
 
     <dependencies>
         <!-- JUnit 5 for testing -->
@@ -36,16 +33,39 @@
 
     <build>
         <plugins>
-            <!-- Compiler Plugin -->
+            <!-- Compiler Plugin (Fixed Java Version) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>23</source>
-                    <release>23</release>
-                    <target>23</target>
+                    <source>17</source>
+                    <release>17</release>
+                    <target>17</target>
                 </configuration>
+            </plugin>
+
+            <!-- JaCoCo Plugin (Fixed Execution Order to Initialize Phase) -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Surefire Plugin for Running Tests -->
@@ -54,6 +74,21 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M7</version>
             </plugin>
+
+            <!-- JAR Plugin (Added for Proper JAR Packaging) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>
