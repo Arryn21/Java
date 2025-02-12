@@ -23,16 +23,16 @@ pipeline {
             steps {
                 bat 'mvn test'
             }
-            post {
-                always {
-                    junit '**/target/surefire-reports/*.xml'
-                }
-            }
+            //post {
+                //always {
+               //     junit '**/target/surefire-reports/*.xml'
+              //  }
+        //    }
         }
 
         stage('Code Quality Check') {
             steps {
-                bat 'mvn sonar:sonar -Dsonar.token=$SONAR_LOGIN'
+                bat 'mvn sonar:sonar -Dsonar.token=sqa_a9e3cf576b597b2e30fb14695786e0e068f3c269'
             }
         }
 
