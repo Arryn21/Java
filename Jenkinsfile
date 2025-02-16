@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONAR_HOST_URL = 'http://localhost:9000'
-        SONAR_LOGIN = 'new-sonar-token'
+        SONAR_LOGIN = credentials('new-sonar-token')
     }
     
     stages {
