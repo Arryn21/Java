@@ -23,27 +23,32 @@ pipeline {
             steps {
                 bat 'mvn test'
             }
-            //post {
-                //always {
-               //     junit '**/target/surefire-reports/*.xml'
-              //  }
-        //    }
-        }
-
-        stage('Code Quality Check') {
-            steps {
-                bat 'mvn sonar:sonar -Dsonar.token=sqa_a9e3cf576b597b2e30fb14695786e0e068f3c269'
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml' // Ensure JUnit test reports are captured
+                }
             }
         }
 
         stage('Code Coverage') {
             steps {
-                bat 'mvn clean verify'
+                bat 'mvn clean verify'  // Runs tests & generates coverage report
             }
             post {
                 always {
-                    jacoco execPattern: 'target/jacoco.exec'
+                    jacoco execPattern: 'target/jacoco.exec'  // Ensure correct coverage file
                 }
+            }
+        }
+
+        stage('Code Quality Check') {
+            steps {
+                bat '''
+                mvn sonar:sonar \
+                -Dsonar.host.url=${SONAR_HOST_URL} \
+                -Dsonar.login=${SONAR_LOGIN} \
+                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                '''
             }
         }
 
