@@ -42,8 +42,8 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
-                withCredentials([string(credentialsId: 'new-sonar-token', variable: 'SONAR_LOGIN')]) {
-                    bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_LOGIN% -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
+                withCredentials([string(credentialsId: 'new-sonar-token', variable: 'SONAR_TOKEN')]) {
+                    bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.token=%SONAR_TOKEN% -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
                 }
             }
         }
