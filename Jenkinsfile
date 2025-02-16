@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         SONAR_HOST_URL = 'http://localhost:9000'
-        SONAR_LOGIN = credentials('new-sonar-token')
     }
     
     stages {
@@ -25,7 +24,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/target/surefire-reports/*.xml' // Ensure JUnit test reports are captured
+                    junit '**/target/surefire-reports/*.xml' // Capture JUnit reports
                 }
             }
         }
@@ -36,14 +35,16 @@ pipeline {
             }
             post {
                 always {
-                    jacoco execPattern: 'target/jacoco.exec'  // Ensure correct coverage file
+                    jacoco execPattern: 'target/jacoco.exec'  // Ensures JaCoCo reports are generated
                 }
             }
         }
 
         stage('Code Quality Check') {
             steps {
-                bat 'mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml'
+                withCredentials([string(credentialsId: 'new-sonar-token', variable: 'SONAR_LOGIN')]) {
+                    bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.login=%SONAR_LOGIN% -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
+                }
             }
         }
 
