@@ -43,12 +43,7 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
-                bat '''
-                mvn sonar:sonar \
-                -Dsonar.host.url=${SONAR_HOST_URL} \
-                -Dsonar.login=${SONAR_LOGIN} \
-                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
-                '''
+                bat 'mvn sonar:sonar -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_LOGIN} -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml'
             }
         }
 
