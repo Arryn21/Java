@@ -1,9 +1,6 @@
 package com.example;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.Extension;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-//@ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 
