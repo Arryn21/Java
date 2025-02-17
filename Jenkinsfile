@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-//     environment {
-//         SONAR_HOST_URL = 'http://localhost:9000'
-//     }
+    environment {
+        SONAR_HOST_URL = 'http://localhost:9000'
+    }
     
     stages {
         stage('Checkout') {
