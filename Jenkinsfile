@@ -44,7 +44,7 @@ pipeline {
             steps {
                 // Use the SonarQube environment configured in Jenkins (SONARQUBE_URL, SONAR_TOKEN)
                 withSonarQubeEnv('SonarQube') {  // Ensure this name matches the name set in Jenkins configuration
-                    bat 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
+                    bat 'mvn sonar:sonar -Dsonar.projectKey=MathUtils -Dsonar.projectName=Jenkins-Sonar-Integration -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
                 }
             }
         }
