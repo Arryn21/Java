@@ -42,8 +42,8 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
-                withSonarQubeEnv('SonarQube') {  // Ensure this name matches the name set in Jenkins configuration
-                    bat 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
+                withCredentials([string(credentialsId: 'new-sonar-token', variable: 'SONAR_TOKEN')]) {
+                    bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.token=%SONAR_TOKEN% -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
                 }
             }
         }
@@ -69,11 +69,6 @@ pipeline {
         }
         failure {
             echo 'Build failed. Check logs for details.'
-                        steps {
-                            mail to: 'tigertharu21@gmail.com',
-                                 subject: "Build ${currentBuild.result}: Job ${env.JOB_NAME}",
-                                 body: "Build ${env.BUILD_NUMBER} completed.\nCheck details: ${env.BUILD_URL}"
-                        }
         }
     }
 }
