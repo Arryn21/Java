@@ -4,7 +4,7 @@ pipeline {
     environment {
         SONAR_HOST_URL = 'http://localhost:9000'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -42,8 +42,9 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
-                withCredentials([string(credentialsId: 'new-sonar-token', variable: 'SONAR_TOKEN')]) {
-                    bat 'mvn sonar:sonar -Dsonar.host.url=%SONAR_HOST_URL% -Dsonar.token=%SONAR_TOKEN% -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
+                // Use the SonarQube environment configured in Jenkins (SONARQUBE_URL, SONAR_TOKEN)
+                withSonarQubeEnv('SonarQube') {  // Ensure this name matches the name set in Jenkins configuration
+                    bat 'mvn sonar:sonar -Dsonar.jdbc.url=jdbc:sqlserver://DESKTOP-9SE36JR:1433;databaseName=sonarqube -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
                 }
             }
         }
