@@ -42,6 +42,7 @@ pipeline {
 
         stage('Code Quality Check') {
             steps {
+                withSonarQubeEnv('SonarQube') {  // Ensure this name matches the name set in Jenkins configuration
                     bat 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
                 }
             }
