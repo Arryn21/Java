@@ -35,7 +35,7 @@ pipeline {
             }
             post {
                 always {
-                    jacoco execPattern: 'target/jacoco.exec'  // Ensures JaCoCo reports are generated
+                    jacoco execPattern: 'target/jacoco.exec'
                 }
             }
         }
@@ -43,7 +43,7 @@ pipeline {
         stage('Code Quality Check') {
             steps {
                 // Use the SonarQube environment configured in Jenkins (SONARQUBE_URL, SONAR_TOKEN)
-                withSonarQubeEnv('SonarQube') {  // Ensure this name matches the name set in Jenkins configuration
+                withSonarQubeEnv('SonarQube') {
                     bat 'mvn sonar:sonar -Dsonar.projectKey=MathUtils -Dsonar.projectName=Jenkins-Sonar-Integration -Dsonar.coverage.jacoco.xmlReportPaths=target/jacoco-report/jacoco.xml'
                 }
             }
